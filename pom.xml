@@ -9,7 +9,6 @@
 	<packaging>jar</packaging>
 
 	<name>dl</name>
-	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -72,7 +71,21 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
-        
+		
+		<!-- 淘宝客 sdk-->
+		<dependency>
+		    <groupId>taobao</groupId>
+		    <artifactId>taobao-sdk-source</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>taobao</groupId>
+		    <artifactId>taobao-sdk</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		
+		 
+		
 	</dependencies>
 
 	<build>
