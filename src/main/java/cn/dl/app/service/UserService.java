@@ -26,4 +26,27 @@ public class UserService {
 		return null;
 	}
 
+	@Transactional
+	public void update(User user) {
+		if (user.getId() != null) {
+			dao.update(user);
+		}
+	}
+
+	public User getByPhone(String phone) {
+		if (phone != null) {
+			User user = dao.getByPhone(phone);
+			return user;
+		}
+		return null;
+	}
+
+	public User getByInvitationCode(String invitationCode) {
+		if (invitationCode != null) {
+			User user = dao.getByPhone(invitationCode);
+			return user;
+		}
+		return null;
+	}
+
 }
