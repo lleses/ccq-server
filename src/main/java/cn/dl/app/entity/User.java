@@ -9,8 +9,10 @@ public class User {
 	private Integer id;
 	/** 电话 */
 	private String phone;
-	/** 邀请码 */
-	private Integer invitationCode;
+	/** 用户自己的邀请码 */
+	private String invitationCode;
+	/** 邀请人ID */
+	private Integer InvitePeopleId;
 
 	public Integer getId() {
 		return id;
@@ -28,12 +30,20 @@ public class User {
 		this.phone = phone;
 	}
 
-	public Integer getInvitationCode() {
+	public String getInvitationCode() {
 		return invitationCode;
 	}
 
-	public void setInvitationCode(Integer invitationCode) {
+	public void setInvitationCode(String invitationCode) {
 		this.invitationCode = invitationCode;
+	}
+
+	public Integer getInvitePeopleId() {
+		return InvitePeopleId;
+	}
+
+	public void setInvitePeopleId(Integer invitePeopleId) {
+		InvitePeopleId = invitePeopleId;
 	}
 
 }
