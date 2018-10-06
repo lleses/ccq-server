@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dl.app.dao.OrderCommissionDao">
+
+	<insert id="add" parameterType="cn.dl.app.entity.OrderCommission" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+		insert into c_order_commission(orderId,userId,originalUserId,type,level,remark,totalMoney,moneyX10,moneyS1,moneyGp,msgType,msgSucc,msg,addTime,serial)
+		values(#{orderId},#{userId},#{originalUserId},#{type},#{level},#{remark},#{totalMoney},#{moneyX10},#{moneyS1},#{moneyGp},#{msgType},#{msgSucc},#{msg},#{addTime},#{serial})
+	</insert>
+	
+	<select id="getByOrderId" resultType="cn.dl.app.entity.OrderCommission">
+		select
+				*
+		from c_order_commission
+		<where>
+			orderId=#{orderId}
+		</where>
+	</select>
+	
+</mapper>

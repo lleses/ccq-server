@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dl.app.dao.PromotionDao">
+
+	<update id="update" parameterType="cn.dl.app.entity.Promotion" >
+		update c_promotion p set
+			p.use= #{use}
+		where pid=#{pid}
+	</update>
+	
+</mapper>

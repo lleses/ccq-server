@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dl.app.dao.TbkOrderDao">
+
+	<insert id="add" parameterType="cn.dl.app.entity.TbkOrder" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+		insert into c_tbk_order(trade_parent_id,trade_id,num_iid,item_title,item_num,price,pay_price,seller_nick,seller_shop_title,commission,commission_rate,unid,create_time,earning_time,tk_status,tk3rd_type,tk3rd_pub_id,order_type,income_rate,pub_share_pre_fee,subsidy_rate,subsidy_type,terminal_type,auction_category,site_id,site_name,adzone_id,adzone_name,alipay_total_price,total_commission_rate,total_commission_fee,subsidy_fee,relation_id,special_id)
+		values(#{trade_parent_id},#{trade_id},#{num_iid},#{item_title},#{item_num},#{price},#{pay_price},#{seller_nick},#{seller_shop_title},#{commission},#{commission_rate},#{unid},#{create_time},#{earning_time},#{tk_status},#{tk3rd_type},#{tk3rd_pub_id},#{order_type},#{income_rate},#{pub_share_pre_fee},#{subsidy_rate},#{subsidy_type},#{terminal_type},#{auction_category},#{site_id},#{site_name},#{adzone_id},#{adzone_name},#{alipay_total_price},#{total_commission_rate},#{total_commission_fee},#{subsidy_fee},#{relation_id},#{special_id})
+	</insert>
+	
+	<update id="updateAll" parameterType="cn.dl.app.entity.TbkOrder" >
+		update c_tbk_order set
+			trade_parent_id= #{trade_parent_id},
+			trade_id= #{trade_id},
+			num_iid= #{num_iid},
+			item_title= #{item_title},
+			item_num= #{item_num},
+			price= #{price},
+			pay_price= #{pay_price},
+			seller_nick= #{seller_nick},
+			seller_shop_title= #{seller_shop_title},
+			commission= #{commission},
+			commission_rate= #{commission_rate},
+			unid= #{unid},
+			create_time= #{create_time},
+			earning_time= #{earning_time},
+			tk_status= #{tk_status},
+			tk3rd_type= #{tk3rd_type},
+			tk3rd_pub_id= #{tk3rd_pub_id},
+			order_type= #{order_type},
+			income_rate= #{income_rate},
+			pub_share_pre_fee= #{pub_share_pre_fee},
+			subsidy_rate= #{subsidy_rate},
+			subsidy_type= #{subsidy_type},
+			terminal_type= #{terminal_type},
+			auction_category= #{auction_category},
+			site_id= #{site_id},
+			site_name= #{site_name},
+			adzone_id= #{adzone_id},
+			adzone_name= #{adzone_name},
+			alipay_total_price= #{alipay_total_price},
+			total_commission_rate= #{total_commission_rate},
+			total_commission_fee= #{total_commission_fee},
+			subsidy_fee= #{subsidy_fee},
+			relation_id= #{relation_id},
+			special_id= #{special_id}
+		where id=#{id}
+	</update>
+	
+	<select id="getAll" resultType="cn.dl.app.entity.TbkOrder">
+		select
+				*
+		from c_tbk_order
+		order by create_time desc
+	</select>
+	
+	<select id="getByCreatetime" resultType="cn.dl.app.entity.TbkOrder">
+		select
+				*
+		from c_tbk_order	o
+		<where>
+			o.create_time &gt;= to_char(#{create_time},'yyyy-MM-dd') 
+			and o.create_time &lt; to_char(#{create_time},'yyyy-MM-dd') 
+		</where>
+	</select>
+	
+	<!-- 订单是否重复, 0:不重复可以add  非0:重复 -->
+	<select id="checkOrder" resultType="cn.dl.app.entity.TbkOrder">
+		select
+				*
+		from c_tbk_order	o
+		<where>
+			o.trade_parent_id = #{trade_parent_id} and o.trade_id = #{trade_id}
+		</where>
+	</select>
+	
+</mapper>
