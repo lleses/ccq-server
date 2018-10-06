@@ -3,8 +3,125 @@
 <mapper namespace="cn.dl.app.dao.UserDao">
 
 	<insert id="add" parameterType="cn.dl.app.entity.User" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
-		insert into t_user(phone,invitationCode)
-		values(#{phone},#{invitationCode})
+		insert into c_user(phone,invitationCode,invitePeopleId,level,adzone_id,site_id,userId,tradeId)
+		values(#{phone},#{invitationCode},#{invitePeopleId},1,#{adzone_id},#{site_id},#{userId},#{tradeId})
 	</insert>
+	
+	<update id="update" parameterType="cn.dl.app.entity.User" >
+		update c_user set
+			invitationCode= #{invitationCode}
+		where id=#{id}
+	</update>
+	
+	<!-- 解绑用户PID -->
+	<update id="updateAdzoneidAndSiteidAndTradeId" >
+		update c_user set
+			adzone_id= null,
+			site_id= null,
+			tradeId= #{tradeId}
+		where id=#{id}
+	</update>
+	
+	<select id="getByPhone" resultType="cn.dl.app.entity.User">
+		select
+				*
+		from c_user
+		<where>
+			phone=#{phone}
+		</where>
+	</select>
+	
+	
+	<!-- 根据邀请码查询用户 -->
+	<select id="getByInvitationCode" resultType="cn.dl.app.entity.User">
+		select
+				*
+		from c_user
+		<where>
+			invitationCode=#{invitationCode}
+		</where>
+	</select>
+	
+	<!-- 根据邀请人ID查询用户 -->
+	<select id="getById" resultType="cn.dl.app.entity.User">
+		select * from c_user 
+		<where>
+			id = #{id}
+		</where>
+	</select>
+	
+	<!-- 根据邀请人ID查询用户 -->
+	<select id="getByInvitePeopleId" resultType="cn.dl.app.entity.User">
+		select * from c_user 
+		<where>
+			invitePeopleId = #{invitePeopleId}
+		</where>
+	</select>
+	
+	<!-- 根据 订单ID的后面6位 查询用户 -->
+	<select id="getByTradeId" resultType="cn.dl.app.entity.User">
+		select * from c_user 
+		<where>
+			tradeId = #{tradeId}
+		</where>
+	</select>
+	
+	<!-- 根据 广告位ID和来源媒体ID 查询用户 -->
+	<select id="getByadzoneidAndSiteid" resultType="cn.dl.app.entity.User">
+		select * from c_user 
+		<where>
+			adzone_id = #{adzone_id} and site_id = #{site_id}
+		</where>
+	</select>
+	
+	<!-- 往上查询下2级用户 -->
+	<select id="getLevelV2" resultType="cn.dl.app.entity.User">
+		select * from c_user v2 
+		<where>
+			v2.id = (
+					select v1.invitePeopleId from c_user v1 where v1.id=#{id}
+			)
+		</where>
+	</select>
+	
+	<!-- 往上查询下3级用户 -->
+	<select id="getLevelV3" resultType="cn.dl.app.entity.User">
+		select * from c_user v3 
+		<where>
+			v3.id = (
+					
+					select v2.invitePeopleId from c_user v2 
+					<where>
+						v2.id = (
+								select v1.invitePeopleId from c_user v1 where v1.id=#{id}
+						)
+					</where>
+					
+			)
+		</where>
+	</select>
+	
+	<!-- 往上查询下4级用户 -->
+	<select id="getLevelV4" resultType="cn.dl.app.entity.User">
+		select * from c_user v4 
+		<where> v4.id = (
+					
+					select v3.invitePeopleId from c_user v3 
+					<where>
+						v3.id = (
+								
+								select v2.invitePeopleId from c_user v2 
+								<where>
+									v2.id = (
+											select v1.invitePeopleId from c_user v1 where v1.id=#{id}
+									)
+								</where>
+								
+						)
+					</where>
+		) </where>
+	</select>
+	
+	
 	
 </mapper>
